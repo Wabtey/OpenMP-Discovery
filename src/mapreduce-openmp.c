@@ -40,15 +40,34 @@ void printArrayInt(int *count)
     }
 }
 
+int getSize(char *s)
+{
+    char *t; // first copy the pointer to not change the original
+    int size = 0;
+
+    for (t = s; *t != '\0'; t++)
+    {
+        size++;
+    }
+
+    return size;
+}
+
 /* A function that maps a String to a count of characters */
 void map1(char *c, int *count)
 {
 
+    printf("c: '%s', size: %d\n", c, getSize(c));
     for (int i = 0; i < 26; i++)
     {
         count[i] = 0;
     }
-    // to be completed
+    for (int i = 0; i < getSize(c); i++)
+    {
+        printf("%c=%d ", c[i], c[i]);
+        count[c[i] - 97] += 1;
+    }
+    printf("\n");
 }
 
 int main()
