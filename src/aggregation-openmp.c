@@ -31,6 +31,9 @@ int sumTabSeq(int *T)
 {
     int sum = 0;
 
+// If we only used `#pragma omp parallel for`:
+// all threads would have sum weirdly.
+// `#pragma omp parallel for reduction(+ : sum)` acts as "Divide and rule" = `tabSumPar`
 #pragma omp parallel for reduction(+ : sum)
     for (int i = 0; i < N; i++)
     {
@@ -40,6 +43,7 @@ int sumTabSeq(int *T)
     return (sum);
 } // data aggregation (sum)
 
+// Divide and rule
 int sumTabPar(int *T)
 {
     for (int i = 0; i < n; i++)
