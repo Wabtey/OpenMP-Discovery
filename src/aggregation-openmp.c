@@ -46,9 +46,11 @@ int sumTabSeq(int *T)
 // Divide and rule
 int sumTabPar(int *T)
 {
+#pragma omp parallel for
     for (int i = 0; i < n; i++)
     {
         int rootIndex = (i * N / n);
+#pragma omp parallel for
         for (int j = 1; j < N / n; j++)
         {
             T[rootIndex] += T[rootIndex + j];
@@ -59,6 +61,7 @@ int sumTabPar(int *T)
     printTab(T);
 
     int sum = 0;
+#pragma omp parallel for reduction(+ : sum)
     for (int i = 0; i < n; i++)
     {
         sum += T[i * (N / n)];
