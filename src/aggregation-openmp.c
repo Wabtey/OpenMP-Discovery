@@ -31,10 +31,6 @@ int sumTabSeq(int *T)
 {
     int sum = 0;
 
-// If we only used `#pragma omp parallel for`:
-// all threads would have sum weirdly.
-// `#pragma omp parallel for reduction(+ : sum)` acts as "Divide and rule" = `tabSumPar`
-#pragma omp parallel for reduction(+ : sum)
     for (int i = 0; i < N; i++)
     {
         sum += T[i];
@@ -73,8 +69,18 @@ int sumTabPar(int *T)
 int sumTabParOpenMp(int *T)
 {
 
-    // To be implemented
-    return (0);
+    int sum = 0;
+
+// If we only used `#pragma omp parallel for`:
+// all threads would have sum weirdly.
+// `#pragma omp parallel for reduction(+ : sum)` acts as "Divide and rule" = `tabSumPar`
+#pragma omp parallel for reduction(+ : sum)
+    for (int i = 0; i < N; i++)
+    {
+        sum += T[i];
+    }
+
+    return (sum);
 }
 
 int main(int argc, char *argv[])
